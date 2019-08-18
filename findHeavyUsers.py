@@ -66,5 +66,5 @@ cm_counters = session.get_bulk(oids,non_repeaters=0,max_repetitions=snmp_max_rep
 for item in cm_counters:
     if item.oid == '.1.3.6.1.4.1.2011.6.180.1.1.20.3.1.27':#ifDescr
         current_cable_modem = CableModem(args.olt_name,item.oid_index)
-        current_cable_modem.update_down_counter = item.value
+        current_cable_modem.update_down_counter(item.value)
         current_cable_modem.print_values()
