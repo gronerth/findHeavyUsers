@@ -98,7 +98,7 @@ for process in threads:
 for item in results[0]:
     if item.oid == '.1.3.6.1.4.1.2011.6.180.1.1.20.3.1.27':
         current_cable_modem = CableModem(args.olt_name,item.oid_index)
-        current_cable_modem.update_down_counter(item.value)
+        current_cable_modem.update_down_counter(float(item.value))
         cm_list[item.oid_index] = current_cable_modem
         #current_cable_modem.print_values()
 
