@@ -98,10 +98,10 @@ for item in results[1]:
             oid=item.oid,
             oid_index=item.oid_index,
             snmp_type=item.snmp_type,
-            value=item.value
+            value=item.value)
         except:
             continue
-    )
+    
 
 
 """ for item in results[0]:
