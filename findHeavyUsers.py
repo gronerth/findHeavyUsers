@@ -61,7 +61,7 @@ session = Session(hostname=args.ip_address, community=args.community, version=2,
 oids=[]
 oids.append('.1.3.6.1.4.1.2011.6.180.1.1.20.3.1.27') #hwDocsIf3CmtsCmRegStatusTotalDsBytes
 
-cm_counters = session.get_bulk(oids,non_repeaters=0,max_repetitions=snmp_max_repetitions)
+cm_counters = session.bulkwalk(oids,non_repeaters=0,max_repetitions=snmp_max_repetitions)
 
 for item in cm_counters:
     if item.oid == '.1.3.6.1.4.1.2011.6.180.1.1.20.3.1.27':#ifDescr
