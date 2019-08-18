@@ -30,7 +30,7 @@ class CableModemSeriesHelper(SeriesHelper):
         series_name = 'telefonica_cm'
 
         # Defines all the fields in this time series.
-        fields = ['cm_down_counter']
+        fields = ['mac_address','cm_down_counter']
         # Defines all the tags for the series.
         tags = ['olt_name','cm_index']
         # Defines the number of data points to store prior to writing
@@ -57,6 +57,7 @@ class CableModem():
                 str_list=[]
                 str_list.append(self.olt_name)
                 str_list.append(self.cm_index)
+                str_list.append(self.mac_address)
                 str_list.append(self.cm_down_counter)
                 print((",").join(str_list))
 
@@ -94,23 +95,17 @@ for ii in range(len(oids_counters)):
 for process in threads:
     process.join()
 
-for item in results[1]:
-    if item.oid == '.1.3.6.1.2.1.10.127.1.3.3.1.2':#MAC Address
-        try:
-            print '{oid}.{oid_index} {snmp_type} = {value}'.format(
-            oid=item.oid,
-            oid_index=item.oid_index,
-            snmp_type=item.snmp_type,
-            value=convert_mac(item.value))
-        except:
-            continue
-    
-
-
-""" for item in results[0]:
+for item in results[0]:
     if item.oid == '.1.3.6.1.4.1.2011.6.180.1.1.20.3.1.27':
         current_cable_modem = CableModem(args.olt_name,item.oid_index)
         current_cable_modem.update_down_counter(item.value)
         cm_list[item.oid_index] = current_cable_modem
-        current_cable_modem.print_values()
- """
+        #current_cable_modem.print_values()
+
+for item in results[1]:
+    if item.oid == '.1.3.6.1.2.1.10.127.1.3.3.1.2':#MAC Address
+        try:
+            cm_list[item.oid_index].update_mac_address(convert_mac(item.value))
+            cm_list[item.oid_index].print_values()
+        except:
+            continue
