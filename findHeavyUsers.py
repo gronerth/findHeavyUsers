@@ -60,12 +60,13 @@ class CableModem():
                 str_list.append(self.cm_down_counter)
                 print((",").join(str_list))
 
-"""def convert_mac(str):
+def convert_mac(str):
+    print("String: " + str)
 	mac_str=""
 	for i in str:
 		mac_str+=hex(ord(i))
 	mac_str = mac_str.replace('0x','')
-	return(mac_str)"""
+	return(mac_str)
 
 oids_counters=[]
 oids_counters.append('.1.3.6.1.4.1.2011.6.180.1.1.20.3.1.27') #hwDocsIf3CmtsCmRegStatusTotalDsBytes
@@ -98,7 +99,7 @@ for item in results[1]:
             oid=item.oid,
             oid_index=item.oid_index,
             snmp_type=item.snmp_type,
-            value=item.value)
+            value=convert_mac(item.value))
         except:
             continue
     
