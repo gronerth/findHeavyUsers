@@ -14,7 +14,7 @@ parser.add_argument('--community',dest='community',default='u2000_ro',help='SNMP
 
 args = parser.parse_args()
 
-myclient = InfluxDBClient('localhost', 8086, 'root', 'root', 'telegraf')
+myclient = InfluxDBClient('localhost', 8086, 'root', 'root', 'cm_metrics')
 
 class CableModemSeriesHelper(SeriesHelper):
     """Instantiate SeriesHelper to write points to the backend."""
