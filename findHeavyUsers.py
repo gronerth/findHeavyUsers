@@ -61,12 +61,11 @@ class CableModem():
                 print((",").join(str_list))
 
 def convert_mac(str):
-    print("String: " + str)
-	mac_str=""
-	for i in str:
-		mac_str+=hex(ord(i))
-	mac_str = mac_str.replace('0x','')
-	return(mac_str)
+    mac_str=""
+    for i in str:
+        mac_str+=hex(ord(i))
+        mac_str = mac_str.replace('0x','')
+    return(mac_str)
 
 oids_counters=[]
 oids_counters.append('.1.3.6.1.4.1.2011.6.180.1.1.20.3.1.27') #hwDocsIf3CmtsCmRegStatusTotalDsBytes
