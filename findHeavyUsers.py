@@ -1,5 +1,6 @@
 from easysnmp import Session
 import argparse
+from threading import Thread
 from influxdb import InfluxDBClient
 from influxdb import SeriesHelper
 
@@ -56,14 +57,29 @@ class CableModem():
                 str_list.append(self.cm_down_counter)
                 print((",").join(str_list))
 
-session = Session(hostname=args.ip_address, community=args.community, version=2, use_numeric=True)
+oids_counters=[]
+oids_counters.append('.1.3.6.1.4.1.2011.6.180.1.1.20.3.1.27') #hwDocsIf3CmtsCmRegStatusTotalDsBytes
+oids_counters.append('.1.3.6.1.2.1.10.127.1.3.3.1.2') #docsIfCmtsCmSatusMacAddress
 
-oids=[]
-oids.append('.1.3.6.1.4.1.2011.6.180.1.1.20.3.1.27') #hwDocsIf3CmtsCmRegStatusTotalDsBytes
+results = [{} for x in oids_counters]
 
-cm_counters = session.bulkwalk(oids,non_repeaters=0,max_repetitions=snmp_max_repetitions)
+def thread_bulk_TotalBytes(oid,results,index):
+    session = Session(hostname=args.ip_address, community=args.community, version=2, use_numeric=True)
+    results[index] = session.bulkwalk(oid,non_repeaters=0,max_repetitions=snmp_max_repetitions)
 
-for item in cm_counters:
+#create a list of threads
+threads = []
+
+for ii in range(len(oids_counters)):
+    # We start one thread per url present.
+    process = Thread(target=thread_bulk_TotalBytes, args=[oids_counters[ii], results, ii])
+    process.start()
+    threads.append(process)
+
+for process in threads:
+    process.join()
+
+for item in results[0]:
     if item.oid == '.1.3.6.1.4.1.2011.6.180.1.1.20.3.1.27':#ifDescr
         current_cable_modem = CableModem(args.olt_name,item.oid_index)
         current_cable_modem.update_down_counter(item.value)
