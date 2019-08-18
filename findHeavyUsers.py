@@ -51,7 +51,7 @@ class CableModem():
                 self.mac_address = mac_address
 
         def update_influx_db(self):
-                CableModemSeriesHelper(olt_name=self.olt_name,cm_index=self.cm_index,cm_down_counter=self.cm_down_counter)
+                CableModemSeriesHelper(olt_name=self.olt_name,cm_index=self.cm_index,mac_address=self.mac_address,cm_down_counter=self.cm_down_counter)
 
         def print_values(self):
                 str_list=[]
@@ -106,6 +106,9 @@ for item in results[1]:
     if item.oid == '.1.3.6.1.2.1.10.127.1.3.3.1.2':#MAC Address
         try:
             cm_list[item.oid_index].update_mac_address(convert_mac(item.value))
-            cm_list[item.oid_index].print_values()
+           # cm_list[item.oid_index].print_values()
+            cm_list[item.oid_index].update_influx_db()
         except:
             continue
+
+CableModemSeriesHelper.commit()
