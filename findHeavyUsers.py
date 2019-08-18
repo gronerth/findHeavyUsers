@@ -41,13 +41,13 @@ class CableModemSeriesHelper(SeriesHelper):
 
 class CableModem():
         def __init__(self,olt_name,cm_index):
-                self.olt_name=name
+                self.olt_name=olt_name
                 self.cm_index=cm_index
         def update_down_counter(self,cm_down_counter):
                 self.cm_down_counter=cm_down_counter
 
         def update_influx_db(self):
-                OLTSeriesHelper(olt_name=self.name,cm_index=self.cm_index,cm_down_counter=self.cm_down_counter)
+                CableModemSeriesHelper(olt_name=self.olt_name,cm_index=self.cm_index,cm_down_counter=self.cm_down_counter)
 
         def print_values(self):
                 str_list=[]
