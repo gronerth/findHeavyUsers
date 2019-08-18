@@ -64,8 +64,11 @@ def convert_mac(str):
     mac_str=""
     print(str)
     for i in str:
-        mac_str+=hex(ord(i))
-        #mac_str = mac_str.replace('0x','')
+        str_hex = hex(ord(i))
+        str_hex = str_hex.replace('0x','')
+        if len(str_hex) < 2:
+            str_hex = "0"+str_hex
+        mac_str+= str_hex
     return(mac_str)
 
 oids_counters=[]
