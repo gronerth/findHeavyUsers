@@ -62,7 +62,6 @@ class CableModem():
 
 def convert_mac(str):
     mac_str=""
-    print(str)
     for i in str:
         str_hex = hex(ord(i))
         str_hex = str_hex.replace('0x','')
