@@ -47,6 +47,9 @@ class CableModem():
         def update_down_counter(self,cm_down_counter):
                 self.cm_down_counter=cm_down_counter
 
+        def update_mac_address(self,mac_address):
+                self.mac_address = mac_address
+
         def update_influx_db(self):
                 CableModemSeriesHelper(olt_name=self.olt_name,cm_index=self.cm_index,cm_down_counter=self.cm_down_counter)
 
@@ -69,6 +72,8 @@ def thread_bulk_TotalBytes(oid,results,index):
 
 #create a list of threads
 threads = []
+#create list of cable modems
+cm_list = {}
 
 for ii in range(len(oids_counters)):
     # We start one thread per url present.
@@ -79,8 +84,20 @@ for ii in range(len(oids_counters)):
 for process in threads:
     process.join()
 
-for item in results[0]:
-    if item.oid == '.1.3.6.1.4.1.2011.6.180.1.1.20.3.1.27':#ifDescr
+for item in results[1]:
+    if item.oid == '.1.3.6.1.2.1.10.127.1.3.3.1.2':#MAC Address
+        print '{oid}.{oid_index} {snmp_type} = {value}'.format(
+        oid=item.oid,
+        oid_index=item.oid_index,
+        snmp_type=item.snmp_type,
+        value=item.value
+    )
+
+
+""" for item in results[0]:
+    if item.oid == '.1.3.6.1.4.1.2011.6.180.1.1.20.3.1.27':
         current_cable_modem = CableModem(args.olt_name,item.oid_index)
         current_cable_modem.update_down_counter(item.value)
+        cm_list[item.oid_index] = current_cable_modem
         current_cable_modem.print_values()
+ """
