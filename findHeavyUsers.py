@@ -82,7 +82,7 @@ def thread_bulk_TotalBytes(oid,results,index):
     try:
         results[index] = session.bulkwalk(oid,non_repeaters=0,max_repetitions=snmp_max_repetitions)
     except:
-        print("Bulk walk Failed")
+        print("Bulk walk Failed, oid: "+oid)
     
 
 #create a list of threads
