@@ -106,6 +106,8 @@ print("Before iterating answers......")
 for item in results[0]:
     if item.oid == '.1.3.6.1.4.1.2011.6.180.1.1.20.3.1.27':
         try:
+            if(item.value==18446744073709551615):
+                continue
             current_cable_modem = CableModem(args.olt_name,item.oid_index)
             current_cable_modem.update_down_counter(float(item.value))
             cm_list[item.oid_index] = current_cable_modem
@@ -118,9 +120,10 @@ print("Before putting MAC Address.....")
 for item in results[1]:
     if item.oid == '.1.3.6.1.2.1.10.127.1.3.3.1.2':#MAC Address
         try:
-            cm_list[item.oid_index].update_mac_address(convert_mac(item.value))
-           # cm_list[item.oid_index].print_values()
-            cm_list[item.oid_index].update_influx_db()
+            if(item.oid_index in cm_list):
+                cm_list[item.oid_index].update_mac_address(convert_mac(item.value))
+                # cm_list[item.oid_index].print_values()
+                cm_list[item.oid_index].update_influx_db()
         except:
             continue
 try:
