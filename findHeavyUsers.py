@@ -95,12 +95,19 @@ for ii in range(len(oids_counters)):
 for process in threads:
     process.join()
 
+print("Before iterating answers......")
+
 for item in results[0]:
     if item.oid == '.1.3.6.1.4.1.2011.6.180.1.1.20.3.1.27':
-        current_cable_modem = CableModem(args.olt_name,item.oid_index)
-        current_cable_modem.update_down_counter(float(item.value))
-        cm_list[item.oid_index] = current_cable_modem
+        try:
+            current_cable_modem = CableModem(args.olt_name,item.oid_index)
+            current_cable_modem.update_down_counter(float(item.value))
+            cm_list[item.oid_index] = current_cable_modem
         #current_cable_modem.print_values()
+        except:
+            continue
+
+print("Before putting MAC Address.....")
 
 for item in results[1]:
     if item.oid == '.1.3.6.1.2.1.10.127.1.3.3.1.2':#MAC Address
