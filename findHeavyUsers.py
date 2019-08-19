@@ -123,5 +123,7 @@ for item in results[1]:
             cm_list[item.oid_index].update_influx_db()
         except:
             continue
-
-CableModemSeriesHelper.commit()
+try:
+    CableModemSeriesHelper.commit()
+except:
+    pass
