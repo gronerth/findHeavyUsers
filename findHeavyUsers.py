@@ -30,9 +30,9 @@ class CableModemSeriesHelper(SeriesHelper):
         series_name = 'telefonica_cm'
 
         # Defines all the fields in this time series.
-        fields = ['mac_address','cm_down_counter']
+        fields = ['cm_down_counter']
         # Defines all the tags for the series.
-        tags = ['olt_name','cm_index']
+        tags = ['olt_name','cm_index','mac_address']
         # Defines the number of data points to store prior to writing
         # on the wire.
         bulk_size = 20
