@@ -86,6 +86,8 @@ threads = []
 #create list of cable modems
 cm_list = {}
 
+print("Before running Threads")
+
 for ii in range(len(oids_counters)):
     # We start one thread per url present.
     process = Thread(target=thread_bulk_TotalBytes, args=[oids_counters[ii], results, ii])
