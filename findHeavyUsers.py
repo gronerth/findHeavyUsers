@@ -106,7 +106,7 @@ print("Before iterating answers......")
 for item in results[0]:
     if item.oid == '.1.3.6.1.4.1.2011.6.180.1.1.20.3.1.27':
         try:
-            if(item.value==18446744073709551615):
+            if(item.value>=18446744073709550000):
                 continue
             current_cable_modem = CableModem(args.olt_name,item.oid_index)
             current_cable_modem.update_down_counter(float(item.value))
