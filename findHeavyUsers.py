@@ -111,7 +111,7 @@ for item in results[0]:
             current_cable_modem = CableModem(args.olt_name,item.oid_index)
             current_cable_modem.update_down_counter(float(item.value))
             cm_list[item.oid_index] = current_cable_modem
-        #current_cable_modem.print_values()
+            current_cable_modem.print_values()
         except:
             continue
 
