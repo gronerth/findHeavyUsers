@@ -80,6 +80,7 @@ results = [{} for x in oids_counters]
 def thread_bulk_TotalBytes(oid,results,index):
     session = Session(hostname=args.ip_address, community=args.community, version=2, use_numeric=True)
     try:
+         print("Bulk walk Starting...."+oid)
         results[index] = session.bulkwalk(oid,non_repeaters=0,max_repetitions=snmp_max_repetitions)
     except:
         print("Bulk walk Failed, oid: "+oid)
