@@ -94,9 +94,12 @@ print("Before running Threads")
 
 for ii in range(len(oids_counters)):
     # We start one thread per url present.
-    process = Thread(target=thread_bulk_TotalBytes, args=[oids_counters[ii], results, ii])
-    process.start()
-    threads.append(process)
+    try:
+        process = Thread(target=thread_bulk_TotalBytes, args=[oids_counters[ii], results, ii])
+        process.start()
+        threads.append(process)
+    except Exception as e:
+        print(e)
 
 for process in threads:
     process.join()
