@@ -99,6 +99,7 @@ for ii in range(len(oids_counters)):
         process.start()
         threads.append(process)
     except Exception as e:
+        print("Thread error")
         print(e)
 
 for process in threads:
